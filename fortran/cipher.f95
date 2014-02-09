@@ -81,12 +81,12 @@ do i=0, len_Trim(message)
 	PRINT *, "ORIGINAL: ",  message
 	PRINT *, "SECRET:   ", decryption
 end subroutine decrypt 
-program hello
+program cipher
 
 CHARACTER (LEN=*), PARAMETER:: test =  "A STRING FOR ALAN"
 
 call encrypt(100, test)
 call decrypt(100, "W XQPP")
 
-end program hello
+end program cipher
 	   
