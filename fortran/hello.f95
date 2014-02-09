@@ -7,6 +7,12 @@ subroutine encrypt(shift, message)
 	INTEGER :: tempNum2
 	CHARACTER (Len =len_Trim(message)) :: encryption
 	! 32 = blank, char converts from int to char
+	PRINT *, "...BEEP BOOP ENCRYPTING..."
+	do while (shift > 26) 
+	shift = MOD( shift, 26)
+	end do
+	print *, shift
+	
 	do i=0, len_Trim(message)
 			tempC = message(i:i+1) 
 			tempNum1 = IACHAR(tempC)
@@ -15,13 +21,12 @@ subroutine encrypt(shift, message)
 			
 			if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +shift <=90) then 
 				tempNum2 = tempNum1 +shift 
-				! need -26 if over 90
 			else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +shift >90) then
-				tempNum2 = tempNum1 +shift -26
+				tempNum2 = tempNum1 + shift -26
 			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +shift <= 122) then
 				tempNum2 = tempNum1 +shift
 			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +shift >122) then 
-				tempNum2 = tempNum1 +shift -26
+				tempNum2 = tempNum1 + shift -26
 			else 
 				tempNum2 = 32
 			end if
@@ -32,8 +37,8 @@ subroutine encrypt(shift, message)
 			
 	end do
 	
-	PRINT *, message
-	PRINT *, encryption
+	PRINT *, "ORIGINAL: ",  message
+	PRINT *, "SECRET: ", encryption
 end subroutine encrypt
 
 subroutine decrypt (shift, message)
@@ -45,21 +50,26 @@ INTEGER :: shift
 	INTEGER :: tempNum2
 	CHARACTER (Len =len_Trim(message)) :: decryption
 
+	do while (shift > 26) 
+	shift = MOD( shift, 26)
+	end do
+print *, shift
+
 do i=0, len_Trim(message)
 			tempC = message(i:i+1) 
 			tempNum1 = IACHAR(tempC)
 			!print *, tempC
-			!print *, tempNum1
+			print *, tempNum1
 			
-			if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +shift <=90) then 
+			if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 -shift <90) then 
 				tempNum2 = tempNum1 -shift 
 				! need -26 if over 90
-			else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +shift >90) then
-				tempNum2 = tempNum1 -shift +26
-			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +shift <= 122) then
+			else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 -shift >90) then
+				tempNum2 = tempNum1 - shift +26
+			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 -shift <= 122) then
 				tempNum2 = tempNum1 -shift
-			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +shift >122) then 
-				tempNum2 = tempNum1 -shift +26
+			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 -shift >122) then 
+				tempNum2 = tempNum1 - shift + 26
 			else 
 				tempNum2 = 32
 			end if
@@ -76,11 +86,11 @@ end subroutine decrypt
 program hello
 
 CHARACTER (LEN=*), PARAMETER:: test =  "A STRING FOR ALAN"
-CHARACTER (LEN=*), PARAMETER:: test2 =  "a bUtt"
+CHARACTER (LEN=*), PARAMETER:: test2 =  "a butt"
 
 !call encrypt(1, test)
-call encrypt(27, test2)
-call decrypt(27, "b cVuu")
+call encrypt(26*2 +1, test2)
+call decrypt(100, "W XQPP")
 
 end program hello
 	   
