@@ -1,21 +1,15 @@
-subroutine encrypt(shift, message)
-	INTEGER :: shift
+subroutine create (message, shift, flag)
 	CHARACTER (*), intent(inout) :: message
+	INTEGER :: shift
+	LOGICAL :: flag
 	CHARACTER :: tempC
 	CHARACTER :: tempStr
 	INTEGER :: tempNum1
 	INTEGER :: tempNum2
 	CHARACTER (Len =len_Trim(message)) :: encryption
 	
-	PRINT *," "
-	PRINT *, "...BEEP BOOP ENCRYPTING..."
-	PRINT *," "
 	
-	do while (shift > 26) 
-	shift = MOD( shift, 26)
-	end do
-	
-	do i=0, len_Trim(message)
+do i=0, len_Trim(message)
 			tempC = message(i:i+1) 
 			tempNum1 = IACHAR(tempC)
 			
@@ -35,12 +29,40 @@ subroutine encrypt(shift, message)
 			encryption(i:i+1) = tempC
 			
 	end do
+	if (flag .AND. shift >=10) then 
+	PRINT *, "Caesar ", shift, ": ", encryption
+	else if (flag) then 
+	PRINT *, "Caesar ", shift, " : ", encryption
+	else
+	PRINT *, "SECRET:   ", encryption
+	end if
+	
+end subroutine create
+
+subroutine encrypt( message, shift)
+	INTEGER :: shift
+	CHARACTER (*), intent(inout) :: message
+	CHARACTER :: tempC
+	CHARACTER :: tempStr
+	INTEGER :: tempNum1
+	INTEGER :: tempNum2
+	CHARACTER (Len =len_Trim(message)) :: encryption
+	do while (shift > 26) 
+	shift = MOD( shift, 26)
+	end do
+	
+	
+	PRINT *," "
+	PRINT *, "...BEEP BOOP ENCRYPTING..."
+	PRINT *," "
+	
+	
 	
 	PRINT *, "ORIGINAL: ",  message
-	PRINT *, "SECRET:   ", encryption
+	call create( message, shift, .FALSE.)
 end subroutine encrypt
 
-subroutine decrypt (shift, message)
+subroutine decrypt (message, shift)
 	INTEGER :: shift
 	CHARACTER (*), intent(inout) :: message
 	CHARACTER :: tempC
@@ -81,13 +103,28 @@ do i=0, len_Trim(message)
 	PRINT *, "ORIGINAL: ",  message
 	PRINT *, "SECRET:   ", decryption
 end subroutine decrypt 
+
+subroutine solve(message, maxShiftValue)
+INTEGER :: maxShiftValue
+CHARACTER (*), intent(inout) :: message
+
+PRINT *," "
+PRINT *, "...BEEP SOLVING BOOP..."
+PRINT *," "
+
+do i=maxShiftValue, 0, -1
+	call create(message, i, .TRUE.)
+end do
+
+end subroutine solve
+
 program cipher
 
 CHARACTER (LEN=*), PARAMETER:: test =  "A STRING FOR ALAN"
 CHARACTER (LEN=*), PARAMETER:: test2 =  "A STRING FOR MLADY"
 
-call encrypt(100, test)
-call decrypt(100, "XQPPO")
-
+call encrypt( test, 100)
+call decrypt("XQPPO", 100)
+call solve( "HAL", 26)
 end program cipher
 	   
