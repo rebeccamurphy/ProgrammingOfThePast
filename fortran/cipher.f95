@@ -1,6 +1,7 @@
 subroutine create (message, shift, flag)
 	CHARACTER (*), intent(inout) :: message
 	INTEGER :: shift
+	INTEGER :: tempShift
 	LOGICAL :: flag
 	CHARACTER :: tempC
 	CHARACTER :: tempStr
@@ -8,19 +9,23 @@ subroutine create (message, shift, flag)
 	INTEGER :: tempNum2
 	CHARACTER (Len =len_Trim(message)) :: encryption
 	
+	tempShift = shift
+	if (shift> 26) then
+	tempShift = MOD( shift, 26)
+	end if
 	
 do i=0, len_Trim(message)
 			tempC = message(i:i+1) 
 			tempNum1 = IACHAR(tempC)
 			
-			if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +shift <=90) then 
-				tempNum2 = tempNum1 +shift 
-			else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +shift >90) then
-				tempNum2 = tempNum1 + shift -26
-			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +shift <= 122) then
-				tempNum2 = tempNum1 +shift
-			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +shift >122) then 
-				tempNum2 = tempNum1 + shift -26
+			if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift <=90) then 
+				tempNum2 = tempNum1 +tempShift 
+			else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift >90) then
+				tempNum2 = tempNum1 + tempShift -26
+			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift <= 122) then
+				tempNum2 = tempNum1 +tempShift
+			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift >122) then 
+				tempNum2 = tempNum1 + tempShift -26
 			else 
 				tempNum2 = 32
 			end if
@@ -47,9 +52,10 @@ subroutine encrypt( message, shift)
 	INTEGER :: tempNum1
 	INTEGER :: tempNum2
 	CHARACTER (Len =len_Trim(message)) :: encryption
-	do while (shift > 26) 
+	
+	if (shift> 26) then
 	shift = MOD( shift, 26)
-	end do
+	end if
 	
 	
 	PRINT *," "
@@ -75,9 +81,9 @@ subroutine decrypt (message, shift)
 	PRINT *, "...BOOP BEEP DECRYPTING..."
 	PRINT *," "
 	
-	do while (shift > 26) 
+	if (shift> 26) then
 	shift = MOD( shift, 26)
-	end do
+	end if
 do i=0, len_Trim(message)
 			tempC = message(i:i+1) 
 			tempNum1 = IACHAR(tempC)
@@ -125,6 +131,6 @@ CHARACTER (LEN=*), PARAMETER:: test2 =  "A STRING FOR MLADY"
 
 call encrypt( test, 100)
 call decrypt("XQPPO", 100)
-call solve( "HAL", 26)
+call solve( "HAL", 27)
 end program cipher
 	   
