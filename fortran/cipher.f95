@@ -84,9 +84,10 @@ end subroutine decrypt
 program cipher
 
 CHARACTER (LEN=*), PARAMETER:: test =  "A STRING FOR ALAN"
+CHARACTER (LEN=*), PARAMETER:: test2 =  "A STRING FOR MLADY"
 
 call encrypt(100, test)
-call decrypt(100, "W XQPP")
+call decrypt(100, "XQPPO")
 
 end program cipher
 	   
