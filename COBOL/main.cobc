@@ -1,0 +1,14 @@
+IDENTIFICATION DIVISION.
+    PROGRAM-ID. CIPHER. 
+*>identify basics about programs
+ENVIRONMENT DIVISION. 
+*>what enviornment specifics it should run in
+DATA DIVISION. 
+*>contains data program uses 
+PROCEDURE DIVISION. 
+*>meat of program
+
+PROGRAM-BEGIN.
+    DISPLAY "Hello world".
+
+PROGRAM-DONE.
