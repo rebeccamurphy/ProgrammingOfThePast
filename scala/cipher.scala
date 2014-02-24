@@ -89,7 +89,7 @@ object cipher {
 					else if (charNum >=97 && charNum<=122 && charNum -tempShift < 97) //Checks if character is lowerCase, but needs to be shifted with wrap around
 						charNum = charNum - tempShift +26;
 					else // if the character is not a letter, it is not shifted. So spaces and anything else are kept
-						charNum = 32;
+						charNum = charNum;
 				decryption= decryption+ charNum.toChar;
 			}
 		return decryption;
