@@ -1,14 +1,18 @@
 program cipher;
 var 
     test :string;
+function encrypt(message :string; shift: integer): string; forward;
+function decrypt(message :string; shift: integer): string; forward;
 function encrypt(message :string; shift: integer): string;
-    	var (* local variable declaration *)
+        var (* local variable declaration *)
 			encryption :string;
 			tempShift : integer;
 			charNum :integer;
 			i: integer;
 		begin 
             encryption := '';
+			if (shift > -1) then 
+			begin
 			if (shift > 26) then
 				tempShift := shift mod 26
 			else 
@@ -26,10 +30,13 @@ function encrypt(message :string; shift: integer): string;
 					else if (charNum >=97) and (charNum<=122) and (charNum +tempShift >122) then 
 						charNum := charNum + tempShift -26
 					else 
-						charNum := 32;
+						charNum := charNum;
 				encryption:= encryption+ Chr(charNum);
 				end;
 			encrypt := encryption;
+			end
+			else
+			encrypt := decrypt(message, shift * -1);
 		end;
 
 function decrypt(message :string; shift: integer): string;
@@ -40,6 +47,8 @@ function decrypt(message :string; shift: integer): string;
 			i: integer;
 		begin 
             decryption := '';
+		if (shift > -1) then 
+		begin
 			if (shift > 26) then
 				tempShift := shift mod 26
 			else 
@@ -57,10 +66,13 @@ function decrypt(message :string; shift: integer): string;
 					else if (charNum >=97) and (charNum<=122) and (charNum -tempShift <97) then 
 						charNum := charNum - tempShift +26
 					else 
-						charNum := 32;
+						charNum := charNum;
 				decryption:= decryption+ Chr(charNum);
 				end;
 			decrypt := decryption;
+		end
+		else
+			decrypt := encrypt(message, shift * -1);
 		end;
 procedure solve(message:string; maxShiftValue:integer);
 	var
