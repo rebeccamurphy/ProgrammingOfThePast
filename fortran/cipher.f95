@@ -1,3 +1,4 @@
+!TODO enable negative shifts 
 subroutine create (message, shift, flag)
 	CHARACTER (*), intent(inout) :: message
 	INTEGER :: shift
@@ -18,18 +19,19 @@ do i=0, len_Trim(message)
 			tempC = message(i:i+1) 
 			tempNum1 = IACHAR(tempC)
 			
-			if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift <=90) then 
-				tempNum2 = tempNum1 +tempShift 
-			else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift >90) then
-				tempNum2 = tempNum1 + tempShift -26
-			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift <= 122) then
-				tempNum2 = tempNum1 +tempShift
-			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift >122) then 
-				tempNum2 = tempNum1 + tempShift -26
-			else 
-				tempNum2 = 32
+			if (shift >-1) then
+				if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift <=90) then 
+					tempNum2 = tempNum1 +tempShift 
+				else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift >90) then
+					tempNum2 = tempNum1 + tempShift -26
+				else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift <= 122) then
+					tempNum2 = tempNum1 +tempShift
+				else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift >122) then 
+					tempNum2 = tempNum1 + tempShift -26
+				else 
+					tempNum2 = tempNum1
+				end if
 			end if
-			
 			tempC = CHAR(tempNum2)
 			encryption(i:i+1) = tempC
 			
@@ -98,7 +100,7 @@ do i=0, len_Trim(message)
 			else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 -shift <97) then 
 				tempNum2 = tempNum1 - shift + 26
 			else 
-				tempNum2 = 32
+				tempNum2 = tempNum1
 			end if
 			
 			tempC = CHAR(tempNum2)
