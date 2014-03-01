@@ -1,0 +1,37 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CIPHER.
+       *> idenify basics about the program
+       ENVIRONMENT DIVISION.
+       *> what environment specifics it should run in
+       DATA DIVISION. 
+       *>contains the data the program uses
+       WORKING-STORAGE SECTION. 
+       01 	THE-MESSAGE 	PICTURE IS X(50).
+       01 	THE-SHIFT		PICTURE IS 9(10).
+       PROCEDURE DIVISION.
+       MOVE "A TEST FOR ALAN" to THE-MESSAGE.
+       MOVE 2 TO THE-SHIFT.
+       *> Meat of program 
+       *>DISPLAY THE-SHIFT.
+       CALL "ENCODE" USING BY CONTENT THE-MESSAGE, THE-SHIFT.
+	   STOP RUN.
+
+	   IDENTIFICATION DIVISION.
+	   PROGRAM-ID. ENCODE.
+	   DATA DIVISION.
+	   WORKING-STORAGE SECTION.
+	   LINKAGE SECTION.
+	   01	SECRET		PICTURE IS X(50).
+	   01	SHIFT		PICTURE IS 9(10).
+	   01	TEMPC		PICTURE IS X(1).
+	   01	CHARNUM		PICTURE IS 9(3).
+
+	   PROCEDURE DIVISION USING SECRET, SHIFT. 
+	   		IF SHIFT > 26 THEN 
+	   			MOVE FUNCTION MOD (SHIFT, 26) TO SHIFT.
+
+	   		DISPLAY SHIFT.
+	   		EXIT PROGRAM. 
+	   END PROGRAM ENCODE.
+
+
