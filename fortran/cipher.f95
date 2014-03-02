@@ -37,19 +37,19 @@ do i=0, len_Trim(message) !loops through message char by char
 	tempC = message(i:i+1) !tempC = char at i
 	tempNum1 = IACHAR(tempC) !tempNum1 = ord # of tempC
 		!uppercase shift
-		if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift <=90) then 
-			tempNum2 = tempNum1 +tempShift 
-		else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift >90) then
-			tempNum2 = tempNum1 + tempShift -26
-		!lowercase shift
-		else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift <= 122) then
-			tempNum2 = tempNum1 +tempShift
-		else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift >122) then 
-			tempNum2 = tempNum1 + tempShift -26
-		!symbol shift
-		else 
-			tempNum2 = tempNum1 !if char is not a letter, it does not change
-		end if
+	if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift <=90) then 
+		tempNum2 = tempNum1 +tempShift 
+	else if (tempNum1 >= 65 .AND. tempNum1<=90 .AND. tempNum1 +tempShift >90) then
+		tempNum2 = tempNum1 + tempShift -26
+	!lowercase shift
+	else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift <= 122) then
+		tempNum2 = tempNum1 +tempShift
+	else if (tempNum1 >=97 .AND. tempNum1<=122 .AND. tempNum1 +tempShift >122) then 
+		tempNum2 = tempNum1 + tempShift -26
+	!symbol shift
+	else 
+		tempNum2 = tempNum1 !if char is not a letter, it does not change
+	end if
 	tempC = CHAR(tempNum2) !tempC is set to new shifted character
 	encryption(i:i+1) = tempC	!tempC is set to the position it had in message, in encryption
 end do
@@ -137,7 +137,7 @@ PRINT *," "
 PRINT *, "...BEEP SOLVING BOOP..."
 PRINT *," "
 
-do i=maxShiftValue, 0, -1
+do i=maxShiftValue, 0, -1 !loops from maxShiftValue down to 1
 	call create(message, i, .TRUE.)
 end do
 
