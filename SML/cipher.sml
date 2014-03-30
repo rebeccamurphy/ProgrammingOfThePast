@@ -11,27 +11,30 @@ fun cipher() =
 		else
 			0; (*everything is fine*)
 
-	fun encrypt(nil, shift:int) = nil
-		|encrypt(x::xs, shift:int) =
+	fun encrypt2(nil, shift:int) = nil
+		|encrypt2(x::xs, shift:int) =
 		if (shift> 26 ) then 
-		encrypt(x::xs, shift mod 26)
+		encrypt2(x::xs, shift mod 26)
 		else 
 		case (test(x, shift)) 
 		of 
-		(3)=> #" " :: encrypt(xs, shift) |
-		(2)=> chr(ord(x) +shift - 26 ) :: encrypt(xs, shift) |
-		(1)=> chr(ord(x) +shift + 26 ) :: encrypt(xs, shift) |
-		(0)=> chr(ord(x) +shift) :: encrypt(xs, shift) |
+		(3)=> #" " :: encrypt2(xs, shift) |
+		(2)=> chr(ord(x) +shift - 26 ) :: encrypt2(xs, shift) |
+		(1)=> chr(ord(x) +shift + 26 ) :: encrypt2(xs, shift) |
+		(0)=> chr(ord(x) +shift) :: encrypt2(xs, shift) |
 		(_)=> nil;
 	
+	fun encrypt(message, shift:int) =
+		String.implode(encrypt2(message, shift));
+		
 	fun decrypt(message, shift:int) =
 		encrypt(message, ~(shift mod 26));
 	
-	fun solve (message, ~1) = nil |
+	fun solve (message, ~1) = "\n" |
 		solve (message, maxShiftValue:int) =
-		String.explode("Caesar " ^Int.toString(maxShiftValue) ^": ") @ encrypt(message, maxShiftValue) @String.explode("\n") @ solve(message, maxShiftValue-1);
+		"Caesar " ^Int.toString(maxShiftValue) ^": " ^ encrypt(message, maxShiftValue) ^"\n" ^ solve(message, maxShiftValue-1);
 	in
-	print(String.implode(encrypt(mess, 27)) ^ "\n" 
-	^String.implode(decrypt(mess, 27)) ^ "\n"
-	^String.implode(solve(mess, 27)) ^ "\n" )
+	print(encrypt(mess, 27) ^ "\n" 
+	^decrypt(mess, 27) ^ "\n"
+	^solve(mess, 27) ^ "\n" )
 	end;
