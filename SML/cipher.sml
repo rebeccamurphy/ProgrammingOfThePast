@@ -9,7 +9,7 @@ fun cipher() =
 		else if ((ord(m) + shift < 65 andalso ord(m)<90) orelse(ord(m)+shift<97 andalso ord(m)>=97)) then 
 			1 (*upper/lower case under shift*)
 		else
-			0; (*everthing is fine*)
+			0; (*everything is fine*)
 
 	fun encrypt(nil, shift:int) = nil
 		|encrypt(x::xs, shift:int) =
