@@ -1,17 +1,7 @@
 -module(cipher).
 % double has 1 argument. export allows it to be called outside the module. 
--export([fac/1, list_length/1, encrypt/2, test/2, main/0]).
-fac(1) ->
-	1; %semi colons end blocks, periods end functions. 
-fac(N) ->
-	N * fac(N - 1).
-
-list_length([]) ->
-0;
-%The length of an empty list is obviously 0.
-list_length([First | Rest]) ->
-1 + list_length(Rest).
-
+%t to compiler erl into cmd, and c(cipher)
+-export([encrypt/2, test/2, main/0]).
 test (M, Shift) ->
 	 
 	if (M ==  32) -> 
@@ -30,7 +20,7 @@ encrypt([First | Rest], Shift) ->
 		%io:format("~p~n", [[First+ Shift]]).
 		%string:join(cipher:encrypt("ABC", 1),""). will return the right string
 		%no ; if one if statement
-	if (Shift > 26) ->
+	if (Shift > 26 orelse -Shift >26) ->
 		encrypt(list:append(First,Rest), Shift rem 26);
 		true ->
 	case test(First, Shift) of
