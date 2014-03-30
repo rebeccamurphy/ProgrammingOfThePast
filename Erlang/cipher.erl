@@ -18,6 +18,6 @@ encrypt([First | Rest], Shift) ->
 		%string:join(cipher:encrypt("ABC", 1)). will return the right string
 	if 
 		1==1 -> 
-			encrypt(Rest, Shift);
+			[[First + Shift]] ++ encrypt(Rest, Shift);
 	end.
 
