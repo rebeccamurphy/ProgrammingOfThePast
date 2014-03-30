@@ -1,5 +1,5 @@
 object cipher {
-
+//run with scala cipher.scala
  def test(m:Int, shift:Int):Int ={
  	if (m == 32)
  		3;
