@@ -1,9 +1,8 @@
 -module(cipher).
 % double has 1 argument. export allows it to be called outside the module. 
-%t to compiler erl into cmd, and c(cipher)
+%t to compiler erl into cmd, and c(cipher). run cipher:main().
 -export([encrypt/2, test/2, main/0]).
 test (M, Shift) ->
-	 
 	if (M ==  32) -> 
 			3; %space;
 	(( M + Shift > 90 andalso M< 90) orelse ( M +Shift > 122)) ->
@@ -13,8 +12,6 @@ test (M, Shift) ->
 	true -> 
 			0 %everything is fine
 	end.
-
-
 encrypt([], Shift) -> [];
 encrypt([First | Rest], Shift) -> 
 		%io:format("~p~n", [[First+ Shift]]).
@@ -33,7 +30,6 @@ encrypt([First | Rest], Shift) ->
 		(0) ->
 			[[First + Shift]] ++ encrypt(Rest, Shift);
 		_ -> true
-
 	end
 end.
 
