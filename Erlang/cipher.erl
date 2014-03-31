@@ -12,6 +12,7 @@ test (M, Shift) ->
 	true -> 
 			0 %everything is fine
 	end.
+
 encrypt([], Shift) -> [];
 encrypt([First | Rest], Shift) -> 
 		%io:format("~p~n", [[First+ Shift]]).
