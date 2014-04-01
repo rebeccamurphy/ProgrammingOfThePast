@@ -1,4 +1,4 @@
-;run with clisp -. (load 'cipher.lisp") (main)
+;run with clisp -> (load 'cipher.lisp") (main)
 (defun test(chr)
 	(let( (num (char-code chr))
 		  (shifted (+ (char-code chr) shft))
@@ -6,10 +6,8 @@
 	(cond 
 		((= num 32)
 			(code-char 32))
-		;(( M + Shift > 90 andalso M< 90) orelse ( M +Shift > 122))
 		((or (and (> shifted 90) (< num 90)) (> shifted 122)) 	
 			(code-char (+ shifted -26)))
-		;(( M + Shift < 65 andalso M<90) orelse(M+Shift<97 andalso M>=97)) 
 		((or (and (< shifted 65) (< num 90)) (and (< shifted 97) (> num 96))) 	
 			(code-char(+ shifted 26)))
 		(t  (code-char shifted))

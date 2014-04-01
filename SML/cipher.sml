@@ -4,28 +4,22 @@ fun cipher() =
 	val mess  = "Royale with cheese"
 	val mess2 = "Tbz xibu bhbjo Tbz xibu bhbjo J ebsf zpv J epvcmf ebsf zpv npuifsgvdlfs tbz xibu pof npsf Hpeebno ujnf"
 	val mess3 = "what"
-	fun test(m:char, shift)=
-		if (ord(m) = ord (#" ")) then
-			3 (*space*)
-		else if ((ord(m) + shift > 90 andalso ord(m)< 90) orelse (ord(m)+shift > 122)) then
-			2 (*upper/lower case over shift*)
-		else if ((ord(m) + shift < 65 andalso ord(m)<90) orelse(ord(m)+shift<97 andalso ord(m)>=97)) then 
-			1 (*upper/lower case under shift*)
+	fun test(m:int, shift)=
+		if (m = ord (#" ")) then
+			#" " (*space*)
+		else if ((m + shift > 90 andalso m< 90) orelse (m+shift > 122)) then
+			chr(m +shift - 26 ) (*upper/lower case over shift*)
+		else if ((m + shift < 65 andalso m<90) orelse(m+shift<97 andalso m>=97)) then 
+			chr(m +shift + 26 ) (*upper/lower case under shift*)
 		else
-			0; (*everything is fine*)
+			chr(m +shift); (*everything is fine*)
 
 	fun encrypt2(nil, shift:int) = nil
 	|	encrypt2(x::xs, shift:int) =
 			if (shift> 26 ) then 
 			encrypt2(x::xs, shift mod 26)
 			else 
-			case (test(x, shift)) 
-			of 
-			(3)=> #" " :: encrypt2(xs, shift) |
-			(2)=> chr(ord(x) +shift - 26 ) :: encrypt2(xs, shift) |
-			(1)=> chr(ord(x) +shift + 26 ) :: encrypt2(xs, shift) |
-			(0)=> chr(ord(x) +shift) :: encrypt2(xs, shift) |
-			(_)=> nil;
+			test(ord(x), shift) :: encrypt2(xs, shift);
 	
 	fun encrypt(message, shift:int) =
 		String.implode(encrypt2(String.explode(message), shift));

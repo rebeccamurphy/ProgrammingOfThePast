@@ -49,7 +49,8 @@ def main(args: Array[String])
   println("SECRET:  " + decrypt("B tqbsspx xjui b nbdijof hvo", 27));
   println("");
   println("...BEEP SOLVING BOOP...");
-	println(solve("na na na na na na na na na na na na na na na na BATMAAAN", 26));
+  println("");
+	println(solve("na na na na na na na na na na na na na na na na BATMAN", 26));
 }
 
 }
