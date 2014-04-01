@@ -1,7 +1,5 @@
--module(cipher).
-% double has 1 argument. export allows it to be called outside the module. 
-%t to compiler erl into cmd, and c(cipher). run cipher:main().
--export([encrypt/2, test/2, main/0]).
+-module(cipher).%t to compiler erl into cmd, and c(cipher). run cipher:main().
+-export([main/0]). %export allows it to be called outside the module. 
 test (M, Shift) ->
 	if (M ==  32) -> 
 			3; %space;
@@ -15,12 +13,9 @@ test (M, Shift) ->
 
 encrypt([], Shift) -> [];
 encrypt([First | Rest], Shift) -> 
-		%io:format("~p~n", [[First+ Shift]]).
-		%string:join(cipher:encrypt("ABC", 1),""). will return the right string
-		%no ; if one if statement
-	if (Shift > 26 orelse -Shift >26) ->
-		encrypt(list:append(First,Rest), Shift rem 26);
-		true ->
+	if (Shift > 26 orelse -Shift >26) -> %no ; if one if statement
+		encrypt([First] ++ Rest, Shift rem 26);
+		true -> % all other
 	case test(First, Shift) of
 		(3) -> 
 			" "++ encrypt(Rest,Shift);
@@ -36,11 +31,21 @@ end.
 
 decrypt(Message,Shift) -> 
 	encrypt(Message, -Shift).
+
 solve(Message, -1) -> "";
 solve(Message, MaxShiftValue) ->
 	[["Caesar "++ integer_to_list(MaxShiftValue) ++ ": "]] ++encrypt(Message, MaxShiftValue) ++ [["\n"]] ++ solve(Message, MaxShiftValue -1) .
+
 main() ->
-	io:format("~s~n", [encrypt("A butt", 1)]),
-	io:format("~s~n", [decrypt("A butt", 1)]),
-	io:format("~s~n", [solve("A butt", 26)]).
+	io:format("~s~n", [""]),
+	io:format("~s~n", ["...BEEP BOOP ENCRYPTING..."] ),
+	io:format("~s~n", [ "MESSAGE: Brain the size of a planet."]),
+	io:format("~s~n", [["SECRET:  "] ++ encrypt("Brain the size of a planet.", 1)]),
+	io:format("~s~n", [""]),
+	io:format("~s~n", ["...BOOP BEEP DECRYPTING..."] ),
+	io:format("~s~n", [ "MESSAGE: boe uifz ibwf nf epjoh dbftbs djqifst"] ),
+	io:format("~s~n", [["SECRET:  "] ++ decrypt("boe uifz ibwf nf epjoh dbftbs djqifst", 27)]),
+	io:format("~s~n", [""]),
+	io:format("~s~n", ["...BEEP SOLVING BOOP..."] ),
+	io:format("~s~n", [solve("pathetic", 26)]).
 
