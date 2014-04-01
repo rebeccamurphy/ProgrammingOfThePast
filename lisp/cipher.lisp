@@ -1,4 +1,4 @@
-;run with clisp -. (load 'cipher.lisp") (triple 3)
+;run with clisp -. (load 'cipher.lisp") (main)
 (defun test(chr)
 	(let( (num (char-code chr))
 		  (shifted (+ (char-code chr) shft))
@@ -21,7 +21,7 @@
 	(defvar shft shift)
 	(if (> shift -1)
 		(setf shft (mod shift 26))
-		(setf shft shift); this is not being reached
+		(setf shft shift)
 	)
 	(map 'string 'test message)
 	)
@@ -29,8 +29,7 @@
 	(setf shift (- (mod shift 26)))
 	(encrypt message shift)
 	)
-(defun solve (message shift)
-	;why is there nil at the endddddd
+(defun solve (message shift) ;why is there nil at the endddddd
 	(if  (> shift -1)
 		(concatenate 'string "Caesar " (write-to-string shift) ": " (encrypt message shift) "~%" (solve message (- shift 1)))
 		
