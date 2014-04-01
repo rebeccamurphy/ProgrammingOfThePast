@@ -1,14 +1,13 @@
-object cipher {
-//run with scala cipher.scala
- def test(m:Int, shift:Int):Int ={
+object cipher {//run with scala cipher.scala
+ def test(m:Int, shift:Int):Char ={
  	if (m == 32)
- 		3;
+ 	    m.toChar;
  	else if ((m +shift > 90 && m < 90) || m+shift > 122)
-     	2;
+     	(m  + shift - 26).toChar;
   else if ((m+shift < 65 && m < 90) || (m + shift < 97 && m >= 97))
-    	1;
+    	(m + shift + 26).toChar;
   else
-    	0;
+    	(m +shift).toChar;
      }
 
 def encrypt2(message:List[Char], shift:Int):List[Char] ={
@@ -17,12 +16,7 @@ def encrypt2(message:List[Char], shift:Int):List[Char] ={
 	else {
       message match {
         case head :: tail => 
-        	test(head.toInt, shift) match {
-        	case 3 => head ::encrypt2(tail, shift)
-        	case 2 => (head.toInt +shift - 26).toChar :: encrypt2(tail, shift)
-        	case 1 => (head.toInt +shift + 26).toChar :: encrypt2(tail, shift)
-        	case 0 => (head.toInt +shift).toChar :: encrypt2(tail, shift)
-    		}
+        	test(head.toInt, shift) :: encrypt2(tail, shift);
         case Nil => Nil
       }
   }
