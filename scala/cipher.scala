@@ -57,4 +57,5 @@ def main(args: Array[String])
   println("...BEEP SOLVING BOOP...");
 	println(solve("na na na na na na na na na na na na na na na na BATMAAAN", 26));
 }
+
 }
